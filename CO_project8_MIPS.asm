@@ -725,3 +725,122 @@ emptyLists:
  lw $ra ,0($sp) #restore the return address
  jr $ra
 	
+	
+#***************************************** binary_search function *************************
+binary_search:
+ bne $a0,1,Else #if $a0(req)!=1
+ bne $a0,3,Else #if $a0(req)!=3
+ li $t0,0 #set $t0(lift)equal to zero
+ move $t1,$a3 #set $t1(right)to $a0(size)
+ j next
+#start wihle loop
+ loop1:
+   add $t4, $t0, $t1 #add $t0 and $t1 to $t4(mid)
+   sra $t4, $t4, 1 #shift right $t4(mid)->mid/2
+   stli $t0, $t1, exit1
+   lw $t6, 4($t4) #load from memory a[mid].data
+   lw $t7, 4($a1) #load from memory b.data
+   slt $t6, $t7, end
+   addi $t0, $t4, 1 #add mid and 1 to lift
+  end:
+   move $t1, $t4
+  j loop1
+##########################################################################################
+ exit1:
+  addi $t3, $t1, -1 # add $t1 to -1 and ut it in $t3
+  add $t0, $zero, $zero #set $t0(lift)equal to zero
+  move $t1,$a3 #set $t1(right)to $a0(size)
+ loop2:
+   add $t4, $t0, $t1 #add lift and right ut it in mid
+   addi $t4, $t4, 1
+   sra $t4, $t4,1
+   stli $t0, $t1, exit2
+   lw $t6, 4($t4) #load from memory 
+   lw $t7, 4($a1) #load from memory b.data
+   slti $t6, $t7,end1
+   addi $t1, $t4, 1 #add mid and -1 to right
+  end1:
+    move $t0, $t4
+  j loop2
+ exit2:
+ bne $t0, $zero, else1 #if lift!=zero 
+   addi $t2, $t1,1 #add 1 to right and put it in begin          
+ else1:
+   move $t2, $t1 #set begin to right
+###########################################################################################
+   beq $a0, 1,end2 #if req ==1
+ print_loop:#to print searched data
+  # i = $t5
+  ble $t5, $t3, exit3
+  addi $t5, $t5, 1
+  lw $t6, 0($t4) #load from memory a[mid].prirorty
+  lw $t7, 0($a1) #load from memory b.prirorty
+  beq $t7, $t6,end3 #if a[mid].prirorty != b.prirorty
+  end3:
+    li $v0, 1
+     lw $a0, $t7
+     syscall
+    li $v0, 11
+      lb $a0, $t6
+      syscall    
+   j print_loop     
+ end2:
+  print_loop1:
+      ble $t5, $t3, exit3
+      addi $t5, $t5, 1
+      li $v0, 1
+        lw $a0, $t7
+        syscall
+     li $v0, 11
+       lb $a0, $t6
+       syscall
+    j print_loop1
+ exit3:
+#################################################################################
+ Else:
+  loop3:
+   add $t4, $t0, $t1 #add $t0 and $t1 to $t4(mid)
+   sra $t4, $t4, 1 #shift right $t4(mid)->mid/2
+   stli $t0, $t1, exit1
+   lw $t6, 0($t4) #load from memory a[mid].prirorty
+   lw $t7, 0($a1) #load from memory b.prirorty
+   slt $t6, $t7, end
+   addi $t0, $t4, 1 #add mid and 1 to lift
+  end:
+   move $t1, $t4
+  j loop3
+##########################################################################################
+ exit1:
+  addi $t3, $t1, -1 # add $t1 to -1 and ut it in $t3
+  add $t0, $zero, $zero #set $t0(lift)equal to zero
+  move $t1,$a3 #set $t1(right)to $a0(size)
+ loop4:
+   add $t4, $t0, $t1 #add lift and right ut it in mid
+   addi $t4, $t4, 1
+   sra $t4, $t4,1
+   stli $t0, $t1, exit2
+   lw $t6, 4($t4) #load from memory  a[mid].prirorty
+   lw $t7, 4($a1) #load from memory b.prirorty
+   slti $t6, $t7,end1
+   addi $t1, $t4, 1 #add mid and -1 to right
+  end1:
+    move $t0, $t4
+  j loop4
+ exit2:
+ bne $t0, $zero, else1 #if lift!=zero 
+   addi $t2, $t1,1 #add 1 to right and put it in begin          
+ else1:
+   move $t2, $t1 #set begin to right
+##################################################################################
+ print_loop2:
+      ble $t5, $t3, exit4
+      addi $t5, $t5, 1
+      li $v0, 1
+        lw $a0, $t7
+        syscall
+     li $v0, 11
+       lb $a0, $t6
+       syscall
+    j print_loop2
+ exit4:
+ jr $ra
