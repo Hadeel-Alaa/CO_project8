@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1613094798 source:d:\hadeel\codes\c\cofinal_project\list.c
+	"list.h"
+	<stdio.h>
+	<stdlib.h>
+
+1613094731 d:\hadeel\codes\c\cofinal_project\list.h
+
+1613094710 source:d:\hadeel\codes\c\cofinal_project\main.c
+	<stdio.h>
+	<stdlib.h>
+	"list.h"
+
