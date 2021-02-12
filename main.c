@@ -74,18 +74,21 @@ void ProcessAllRequests()
 int main()
 {
 
-  createlist(&a1);
+createlist(&a1);
   createlist(&a2);
   createlist(&a3);
   createlist(&a4);
-  int j,size;
-  entry x,all_list[80];
+  int j,size,flag=0; entry x,all_list[80];
   while(!isfull(&a1)||!isfull(&a2)||!isfull(&a3)||!isfull(&a4)){
-            printf("Enter The data :\n");
+      printf("Enter The data :\n");
+      if(flag){
             getchar();
+            }
             scanf("%c",&x.data);
+            flag=1;
             printf("Choose The priority\n1-Critical\n2-High\n3-Medium\n4-Low\n");
             scanf("%d",&x.priority);
+             printf("%d",x.priority);
         if(!isfull(&a1)){
             Insert(&a1,x,ListSize(&a1));
             }
@@ -101,14 +104,13 @@ int main()
        else{break;}
     printf("1-continue\n2-end\n");
     scanf("%d",&j);
-    //getchar();
     if(j==2){
         break;
     }
   }
 while(1){
      int key;
-   printf("enter \n1:search  \n2:empty all lists  \n3:join lists  \n4:update requests Priority\n5:process all requests \n6:Delete\n7:Sort one list\n8:end  \n");
+   printf("enter \n1:search  \n2:empty all lists  \n3:join lists  \n4:update requests Priority\n5:process all requests \n6:Delete\n7:end  \n");
     scanf("%d",&key);
         if(key== 2)
         {
@@ -156,26 +158,8 @@ while(1){
                 scanf("%d",&pos);
                 Delete(&a4,pos,&item);
              }
-        }else if(key== 7)
-        {
-            int listno=0;
-            int option=0;
-            printf("Enter 0 to sort by priority ,or enter 1 to sort by data\n");
-            scanf("%d",&option);
-             printf("choose number of List\n1-List1\n2-List2\n3-List3\n4-List4\n");
-             scanf("%d",&listno);
-             if(listno==1){
-                sortList(&a1,option);
-             }else if(listno==2){
-                sortList(&a2,option);
-             }else if(listno==3){
-                  sortList(&a3,option);
-             }else if(listno==4){
-                 sortList(&a4,option);
-             }
-
         }
-        else if(key==8 )
+        else if(key== 7)
         {
              return 0;
         }
