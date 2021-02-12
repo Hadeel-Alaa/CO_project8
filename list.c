@@ -42,10 +42,10 @@ void destroy(List *l){
 }
 
 void emptyLists(List *l1,List *l2,List *l3 ,List *l4){
-    destroy(l1);
-    destroy(l2);
-    destroy(l3);
-    destroy(l4);
+    destroy(&l1);
+    destroy(&l2);
+    destroy(&l3);
+    destroy(&l4);
 }
 
 int ListSize(List *l){
@@ -261,6 +261,16 @@ void quicksort(List *l,int low,int high,int sortBy)
     }
 }
 
+void sortList(List *l,int sortBy)
+{
+    quicksort(l,0,(*l).Size-1,sortBy);
+    for(int i=0; i<(*l).Size; i++)
+    {
+        printf("%c ", (*l).arr[i].data);
+         printf("%d \n", (*l).arr[i].priority);
+
+    }
+}
 
 void sortAllLists(entry a[],List *l1,List *l2,List *l3,List *l4,int sortBy)
 {

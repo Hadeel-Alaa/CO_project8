@@ -1,7 +1,7 @@
 
 #ifndef LIST_H_INCLUDED
 #define LIST_H_INCLUDED
-#define MAX 2
+#define MAX 20
 typedef struct
 {
     int priority;
